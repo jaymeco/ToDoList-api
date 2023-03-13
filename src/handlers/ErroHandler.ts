@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { errors } from "../constants/errors";
+import { ErrorScope } from "../Enums/ErrorScope";
 
 interface ErrorUnhadled {
   code: string;
@@ -15,10 +16,7 @@ class ErrorHandler {
 
     switch (error.code) {
       case errors.AUTH_CREDENTIALS:
-        return response.status(401).json({
-          code: errors.AUTH_CREDENTIALS,
-          message: 'Usuário e senha estão incorretos',
-        });
+        return response.status(401).json(error);
       default:
         return response.status(500).json({
           code: errors.INTERNAL_ERROR,
